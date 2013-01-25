@@ -1,0 +1,12 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+= Installing pear on Ubuntu 12.04 =
+
+{{{
+sudo apt-get install php-pear
+sudo pear channel-update pear.php.net
+sudo pear upgrade-all
+}}}
+

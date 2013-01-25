@@ -1,0 +1,19 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+
+= PHP LDAP Extention =
+
+== Instalation on Ubuntu ==
+
+* Open a terminal and run:
+        {{{
+            sudo apt-get install php5-ldap 
+        }}}
+* You may have to restart Apache if you're running Apache:
+        {{{ 
+            sudo /etc/init.d/apache2 restart
+        }}}
+
+* _Source_: http://shmanic.com/tools/jmapmyldap/documentation/php-ldap-extension.htm

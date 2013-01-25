@@ -1,0 +1,139 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>MiscInstall</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+
+<h1 id="toc_1">Misc Install Config</h1>
+
+<ul>
+<li>
+curl 7.22
+<pre>
+sudo apt-get install php5-curl
+sudo service apache2 restart
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+python 
+<pre>
+sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+sudo apt-get install python2.6 python2.6-dev
+</pre>
+</li>
+</ul>
+
+<h2 id="toc_1.1">Enabling PHP mod on server</h2>
+<blockquote>
+If you are hitting the site and the page is not displaying and the page is downloadin instead you need to enable mod_php
+</blockquote>
+<pre>
+sudo apt-get install php5
+sudo apt-get install libapache2-mod-php5
+sudo /etc/init.d/apache2 restart
+</pre>
+
+<h2 id="toc_1.2">User Account Information</h2>
+
+<ul>
+<li>
+/etc/passwd - User account information.
+</li>
+<li>
+/etc/shadow - Secure user account information such as password.
+</li>
+<li>
+/etc/group - Group account information.
+</li>
+<li>
+/etc/default/useradd - Default values for account creation.
+</li>
+<li>
+/etc/skel/ - Directory containing default files.
+</li>
+<li>
+/etc/login.defs - Shadow password suite configuration.
+</li>
+</ul>
+   
+<ul>
+<li>
+sudo usermod -s /bin/bash gitadmin
+</li>
+</ul>
+
+<p>
+<em>Source</em>: <a href="http://www.cyberciti.biz/faq/linux-unix-appleosx-bsd-could-not-chdir-to-home-directory/">http://www.cyberciti.biz/faq/linux-unix-appleosx-bsd-could-not-chdir-to-home-directory/</a>
+</p>
+
+
+<h2 id="toc_1.3">Chaning Hostname</h2>
+
+<ul>
+<li>
+change the hostname to whatever u want
+<pre>
+sudo vi /etc/hostname  
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+add new hostname to the host file
+<pre>
+sudo vi /etc/hosts
+</pre>
+</li>
+<li>
+restart hostnmame
+<pre>
+sudo /etc/init.d/hostname start
+</pre>
+</li>
+</ul>
+
+<h2 id="toc_1.4">Modifying current user account to diff name Ubuntu 12.04 Desktop</h2>
+<ul>
+<li>
+create another useraccount and set it as admin. 
+</li>
+<li>
+log out of the current account and log back in iwht the new admin account
+</li>
+<li>
+open terminal
+<pre>
+sudo usermod -l [desirednewaccountname] -m -d /home/[desiredaccountname] rootuser
+</pre>
+</li>
+<ul>
+<li>
+here is and example link <a href="http://askubuntu.com/questions/170244/usermod-change-the-username">http://askubuntu.com/questions/170244/usermod-change-the-username</a>
+</li>
+</ul>
+<li>
+log out
+</li>
+<li>
+log back in to ur original account
+</li>
+<li>
+deleted the admin account u created
+</li>
+</ul>
+
+</body>
+</html>

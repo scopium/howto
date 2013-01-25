@@ -1,0 +1,118 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>InstallZend</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+<h1 id="toc_1">Installing Zend Framework 2</h1>
+
+<p>
+*To configure zend framework please refer and follow to <a href="http://framework.zend.com/manual/2.0/en/user-guide/overview.html">http://framework.zend.com/manual/2.0/en/user-guide/overview.html</a>*
+</p>
+<blockquote>
+<strong>Note:</strong> vhosts are under /var/www/ in ubuntu
+</blockquote>
+<ul>
+<li>
+when adding new sites to apache add them to sites-available 
+</li>
+<li>
+once finished enter below to generate the enables site symlink in apache
+<pre>
+sudo a2ensite {sitename} 
+</pre>
+</li>
+</ul>
+    
+<ul>
+<li>
+to enable mod_rewrite 
+</li>
+<ul>
+<li>
+make sure apache is installed
+</li>
+<li>
+enable mod_rewrite
+<pre>
+sudo a2enmod rewrite
+sudo vi /etc/apache2/sites-available/default
+</pre>
+</li>
+</ul>
+<li>
+Find the following
+<pre>
+Options Indexes FollowSymLinks MultiViews
+AllowOverride None
+Order allow,deny
+allow from all
+</pre>
+</li>
+</ul>
+
+<p>
+and change it to
+</p>
+<pre>
+Options Indexes FollowSymLinks MultiViews
+AllowOverride all
+Order allow,deny
+allow from all
+</pre>
+
+<ul>
+<li>
+open /etc/phpmyadmin/apache.conf
+</li>
+<li>
+add the following snippet under &lt;Directory /usr/share/phpmyadmin&gt;
+<pre>
+Options Indexes MultiViews FollowSymLinks   
+AllowOverride None
+Order deny,allow
+Allow from all
+</pre>
+</li>
+<li>
+restart Apache
+<pre>
+sudo /etc/init.d/apache2 restart
+</pre>
+</li>
+</ul>
+<p>
+You can also start apache by
+</p>
+<pre>
+sudo service apache2 restart
+</pre>
+
+<p>
+<em>Source</em>: <a href="http://www.lavluda.com/2007/07/15/how-to-enable-mod_rewrite-in-apache22-debian/">http://www.lavluda.com/2007/07/15/how-to-enable-mod_rewrite-in-apache22-debian/</a>
+</p>
+    
+<ul>
+<li>
+to enable support of .htaccess
+</li>
+<ul>
+<li>
+www.tildemark.com/enable-htaccess-on-apache
+</li>
+</ul>
+</ul>
+
+<p>
+At this point you should have a successful LAMP and Zend Framework Installation.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>InstallGit</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+<h1 id="toc_1">Installing Git</h1>
+
+<pre>
+cd ~/Desktop
+wget http://git-core.googlecode.com/files/git-1.8.0.tar.gz
+tar -xvf git-1.8.0.tar.gz
+cd git-1.8.0/
+sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+make prefix=/usr/local all
+sudo make prefix=/usr/local install
+which git
+/usr/local/bin/git
+git --version
+</pre>
+
+<h2 id="toc_1.1">Sources</h2>
+
+<p>
+<a href="http://www.linuxfromscratch.org/blfs/view/svn/general/git.html">http://www.linuxfromscratch.org/blfs/view/svn/general/git.html</a>
+</p>
+
+</body>
+</html>

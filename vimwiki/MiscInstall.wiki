@@ -1,0 +1,70 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+
+= Misc Install Config=
+
+    * curl 7.22
+{{{
+sudo apt-get install php5-curl
+sudo service apache2 restart
+}}}
+
+    * python 
+{{{
+sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+sudo apt-get install python2.6 python2.6-dev
+}}}
+
+== Enabling PHP mod on server ==
+
+    If you are hitting the site and the page is not displaying and the page is downloadin instead you need to enable mod_php
+{{{
+sudo apt-get install php5
+sudo apt-get install libapache2-mod-php5
+sudo /etc/init.d/apache2 restart
+}}}
+
+== User Account Information ==
+
+   * /etc/passwd - User account information.
+   * /etc/shadow - Secure user account information such as password.
+   * /etc/group - Group account information.
+   * /etc/default/useradd - Default values for account creation.
+   * /etc/skel/ - Directory containing default files.
+   * /etc/login.defs - Shadow password suite configuration.
+   
+   * sudo usermod -s /bin/bash gitadmin
+
+_Source_: http://www.cyberciti.biz/faq/linux-unix-appleosx-bsd-could-not-chdir-to-home-directory/
+
+
+== Chaning Hostname ==
+
+* change the hostname to whatever u want
+{{{
+sudo vi /etc/hostname  
+}}}
+
+* add new hostname to the host file
+{{{
+sudo vi /etc/hosts
+}}}
+* restart hostnmame
+{{{
+sudo /etc/init.d/hostname start
+}}}
+
+== Modifying current user account to diff name Ubuntu 12.04 Desktop ==
+* create another useraccount and set it as admin. 
+* log out of the current account and log back in iwht the new admin account
+* open terminal
+{{{
+sudo usermod -l [desirednewaccountname] -m -d /home/[desiredaccountname] rootuser
+}}}
+    - here is and example link http://askubuntu.com/questions/170244/usermod-change-the-username
+* log out
+* log back in to ur original account
+* deleted the admin account u created

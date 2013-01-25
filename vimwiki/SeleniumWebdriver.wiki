@@ -1,0 +1,37 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+
+= Installing Selenium Webdriver and testing tools =
+
+
+for php we are using the webriver by facebook. Need to download the webdriver library and include in in the project.
+http://seleniumhq.org/docs/03_webdriver.html
+other sample: http://www.digbymarksit.com/2012/08/18/phpunit-selenium-php-webdriver-hours-of-entertainment-part-1/
+
+    * Installing selenium server (modified version of http://www.danstraw.com/installing-selenium-server-2-as-a-service-on-ubuntu/2010/09/23/)
+        - get the latest from http://code.google.com/p/selenium/downloads/list
+        -  click on the latest selenium-server-standalone-#.jar
+        - right click on the file and copy the link
+{{{        
+mkdir /usr/lib/selenium
+cd /usr/lib/selenium/
+sudo wget [copied link]
+mkdir -p /var/log/selenium
+sudo chmod a+w /var/log/selenium/
+}}}
+            - a+w means everyone has permission and can write to directory visit http://en.wikipedia.org/wiki/Chmod
+        - cp the file called selenium.txt to /etc/init.d/selenium  (remove the .txt)
+{{{
+chmod 755 /etc/init.d/selenium
+}}}
+        - You can test it by /etc/init.d/selenium start
+
+== Sources ==
+
+http://qtpselenium.com/selenium-tutorial/selenium-webdriver/
+http://dionysus.uraganov.net/software/how-to-install-selenium-server-with-firefox-on-ubuntu-11-10/
+http://seleniumhq.org/docs/03_webdriver.html
+
+

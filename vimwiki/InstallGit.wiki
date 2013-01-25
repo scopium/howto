@@ -1,0 +1,22 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+= Installing Git =
+
+{{{
+cd ~/Desktop
+wget http://git-core.googlecode.com/files/git-1.8.0.tar.gz
+tar -xvf git-1.8.0.tar.gz
+cd git-1.8.0/
+sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev
+make prefix=/usr/local all
+sudo make prefix=/usr/local install
+which git
+/usr/local/bin/git
+git --version
+}}}
+
+== Sources ==
+
+http://www.linuxfromscratch.org/blfs/view/svn/general/git.html

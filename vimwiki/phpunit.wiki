@@ -1,0 +1,38 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+
+= Installing phpUnit and options =
+
+*requirement*: [[InstallPear| Need to Install Pear]]
+{{{
+pear config-set auto-discover 1
+pear install pear.phpunit/PHPUnit
+}}}
+
+== Optional phpunit packages ==
+
+    *DBUnit*
+    DBUnit port for PHP/PHPUnit to support database interaction testing.
+    This package can be installed using the following command:
+{{{
+pear install phpunit/DbUnit
+}}}
+
+    *PHPUnit_Selenium*
+    Selenium RC integration for PHPUnit.
+    This package can be installed using the following command:
+{{{
+pear install phpunit/PHPUnit_Selenium
+}}}
+
+    *PHPUnit_Story*
+    Story-based test runner for Behavior-Driven Development with PHPUnit.
+    This package can be installed using the following command:
+{{{
+pear install phpunit/PHPUnit_Story
+}}}
+
+== Source ==
+http://www.phpunit.de/manual/current/en/installation.html#installation.optional-packages

@@ -1,0 +1,49 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>InstallJdk</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+<h1 id="toc_1">Install Open JDK</h1>
+
+<p>
+<strong>There are a few ways of installing openjdk</strong>
+</p>
+
+<h2 id="toc_1.1">1</h2>
+<pre>
+sudo apt-get update
+sudo apt-get install openjdk-7-jdk
+sudo apt-get install openjdk-7-jre
+</pre>
+<h2 id="toc_1.2">2</h2>
+
+<p>
+Follow instructions from the links below
+<a href="http://www.devsniper.com/ubuntu-12-04-install-sun-jdk-6-7/">http://www.devsniper.com/ubuntu-12-04-install-sun-jdk-6-7/</a>
+</p>
+
+<h2 id="toc_1.3">3</h2>
+<pre>
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+</pre>
+
+<h2 id="toc_1.4">4</h2>
+<pre>
+update your JAVA_HOME in /etc/environment
+source /etc/environment  to restart
+sudo update-alternatives --get-selections | grep ^java
+java -version
+</pre>
+
+</body>
+</html>

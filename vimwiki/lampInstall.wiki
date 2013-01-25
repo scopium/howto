@@ -1,0 +1,55 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+= Installing LAMP On Ubuntu 12.04 =
+{{{
+sudo apt-get install tasksel
+sudo tasksel
+}}}
+ 
+* select LAMP server
+* mysql root password: password
+    - Now check if php is working
+{{{
+sudo vi /var/www/info.php
+}}}
+
+* add 
+{{{
+<?php phpinfo(); ?>
+}}}
+
+* save and exit
+* restart apache
+{{{
+sudo /etc/init.d/apache2 restart
+}}}
+
+* open your browser and type http://localhost/info
+* you should see the php info. if not SOL. google it =)
+    - To fully manage your LAMP server db, install phpmyadmin
+{{{
+sudo apt-get install phpmyadmin
+}}}
+     - set the password to password
+     - to login open browser and type http://localhost/phpmyadmin
+     - (if) you cant see phpmyadmin then you have to set up phpmyadmin under Apache manually.
+{{{
+sudo vim /etc/apache2/apache2.conf
+}}}
+
+* Add the following line inside the file , preferably on the bottom
+{{{ 
+Include /etc/phpmyadmin/apache.conf 
+}}}
+
+* save and exit
+* restart Apache
+{{{ 
+sudo /etc/init.d/apache2 restart
+}}}
+
+* visit  http://localhost/phpmyadmin
+* username: root
+* password: password

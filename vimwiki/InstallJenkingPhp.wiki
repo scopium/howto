@@ -1,0 +1,148 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+= Installing Jenkins / PHP Project on Ubuntu 12.04 =
+
+Note: You need to have a JDK and JRE installed. openjdk-7-jre and openjdk-7-jdk are suggested. [[InstallJdk| How to install JDK ]]
+
+== Installing Jenkins ==
+    
+    {{{
+
+    wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+    sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+    sudo apt-get update
+    sudo apt-get install jenkins
+
+    }}}
+
+* Once all is installed hit the your domain :8080 (ex. http://localhost:8080) and jenkins should serve
+
+=== Recommended (Required) Plugins for Jenkins ===
+
+    {{{
+
+        wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+        java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp dry htmlpublisher jdepend plot pmd violations xunit
+        java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
+
+    }}}
+
+=== Creating a php job template for jenkins ===
+
+{{{
+        
+    cd $JENKINS_HOME/jobs
+    mkdir php-template
+    cd php-template
+    wget https://raw.github.com/sebastianbergmann/php-jenkins-template/master/config.xml
+    cd ..
+    chown -R jenkins:jenkins php-template/
+    Reload Jenkins' configuration, for instance using the Jenkins CLI:
+    java -jar jenkins-cli.jar -s http://localhost:8080 reload-configuration
+
+}}}
+
+=== Allowing the jenkins user to be able to mkdir without sudo ===
+
+* Paste this in a filed called jenkins_mkdir on your home directory
+   {{{
+     
+    User_Alias USERS = jenkins
+    Cmnd_Alias MKDIR = /bin/mkdir
+    jenkins ALL=(root) MKDIR 
+    
+    }}}
+* Place it in /etc/sudoers.d/
+    {{{
+
+        sudo chown root:root /etc/sudoers.d/jenkins_mkdir
+        sudo chmod 0440      /etc/sudoers.d/jenkins_mkdir
+        verify that jenkins user has the permission now
+        sudo -Ujenkins -l
+        source: source http://linuxtidbits.wordpress.com/2012/03/24/sudoers-file/
+
+    }}}
+=== Redirecting 8080 to 80 ===
+
+* Make sure the iptables is set to restart on reboot
+    {{{
+
+        chkconfig iptables on
+    
+    }}}
+* Add
+
+    {{{
+
+        echo "iptables --table nat --append PREROUTING --protocol tcp --dport 80 --jump REDIRECT --to-port 8080" >> /etc/rcd.local
+        sudo reboot
+    }}}
+
+=== Configuring Deployment after successful build ===
+    
+* Follow Instructions from here https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+SSH+Plugin
+
+== Installing Ant ==
+
+    {{{
+
+        wget http://ftp.heanet.ie/mirrors/www.apache.org/dist/ant/binaries/apache-ant-1.8.4-bin.tar.gz
+        tar -zxf apache-ant-1.8.4-bin.tar.gz
+        sudo mv apache-ant-1.8.4 /usr/local
+        sudo ln -s /usr/local/apache-ant-1.8.4/bin/ant /usr/bin/ant
+
+    }}}
+
+== PHP Tools for Jenkins Jobs ==
+
+Note: Need pear installer. If you dont have it [[InstallPear|install]] it.
+
+    {{{
+
+        sudo pear upgrade PEAR
+        pear version
+        sudo pear config-set auto_discover 1
+        sudo pear install pear.phpqatools.org/phpqatools pear.netpirates.net/phpDox  (this gets thelatest stable versions)
+        sudo pear install pear.phpdoc.org/phpdocumentor
+        pear channel-discover pear.phpdoc.org
+        pear install phpdoc/phpDocumentor-alpha
+        pear install pear.apigen.org/apigen
+        sudo apt-get install php5-xdebug
+        sudo pear install phpunit/ppw
+        sudo apt-get install php5-xsl (needed for phpdocumentor)
+        sudo apt-get install python-software-properties (needed for phpdocumentor)
+        sudo add-apt-repository ppa:gviz-adm/graphviz-dev 
+    
+    }}}
+Note: If the above 2 commands to install graphiz dont work try
+
+    {{{
+
+        sudo apt-get update
+        sudo apt-get install graphviz
+        sudo apt-get update
+        sudo apt-get upgrade graphviz
+        sudo apt-get remove graphviz
+        sudo apt-get autoremove
+        sudo apt-get install graphviz
+
+    }}}
+
+== Sources ==
+
+* http://sebastian-bergmann.de/archives/908-PHP-Project-Wizard.html
+* https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu
+* http://jenkins-php.org/
+* http://pear.phpdoc.org/
+* http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php
+* http://aaronbonner.tumblr.com/post/8380014964/creating-a-php-project-in-jenkins
+* http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php
+* https://github.com/sebastianbergmann
+* http://thephp.cc/dates/2012/zendcon/phpunit-best-practices
+* Checkstyle uses pear php coding standards
+        - http://pear.php.net/manual/en/standards.php
+* PHPDepend http://pdepend.org/documentation/software-metrics/index.html
+* PHPDocumentor  http://www.phpdoc.org/
+* Apigen http://apigen.org/

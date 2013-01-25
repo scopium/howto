@@ -1,0 +1,218 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>InstallJenkingPhp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+<h1 id="toc_1">Installing Jenkins / PHP Project on Ubuntu 12.04</h1>
+
+<p>
+Note: You need to have a JDK and JRE installed. openjdk-7-jre and openjdk-7-jdk are suggested. <a href="InstallJdk.html"> How to install JDK </a>
+</p>
+
+<h2 id="toc_1.1">Installing Jenkins</h2>
+    
+<pre>
+
+wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins
+
+</pre>
+
+<ul>
+<li>
+Once all is installed hit the your domain :8080 (ex. <a href="http://localhost:8080">http://localhost:8080</a>) and jenkins should serve
+</li>
+</ul>
+
+<h3 id="toc_1.1.1">Recommended (Required) Plugins for Jenkins</h3>
+
+<pre>
+
+    wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+    java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp dry htmlpublisher jdepend plot pmd violations xunit
+    java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
+
+</pre>
+
+<h3 id="toc_1.1.2">Creating a php job template for jenkins</h3>
+
+<pre>
+        
+    cd $JENKINS_HOME/jobs
+    mkdir php-template
+    cd php-template
+    wget https://raw.github.com/sebastianbergmann/php-jenkins-template/master/config.xml
+    cd ..
+    chown -R jenkins:jenkins php-template/
+    Reload Jenkins' configuration, for instance using the Jenkins CLI:
+    java -jar jenkins-cli.jar -s http://localhost:8080 reload-configuration
+
+</pre>
+
+<h3 id="toc_1.1.3">Allowing the jenkins user to be able to mkdir without sudo</h3>
+
+<ul>
+<li>
+Paste this in a filed called jenkins_mkdir on your home directory
+<pre>
+  
+ User_Alias USERS = jenkins
+ Cmnd_Alias MKDIR = /bin/mkdir
+ jenkins ALL=(root) MKDIR 
+ 
+</pre>
+</li>
+<li>
+Place it in /etc/sudoers.d/
+<pre>
+
+    sudo chown root:root /etc/sudoers.d/jenkins_mkdir
+    sudo chmod 0440      /etc/sudoers.d/jenkins_mkdir
+    verify that jenkins user has the permission now
+    sudo -Ujenkins -l
+    source: source http://linuxtidbits.wordpress.com/2012/03/24/sudoers-file/
+
+</pre>
+</li>
+</ul>
+<h3 id="toc_1.1.4">Redirecting 8080 to 80</h3>
+
+<ul>
+<li>
+Make sure the iptables is set to restart on reboot
+<pre>
+
+    chkconfig iptables on
+
+</pre>
+</li>
+<li>
+Add
+</li>
+</ul>
+
+<pre>
+
+    echo "iptables --table nat --append PREROUTING --protocol tcp --dport 80 --jump REDIRECT --to-port 8080" &gt;&gt; /etc/rcd.local
+    sudo reboot
+</pre>
+
+<h3 id="toc_1.1.5">Configuring Deployment after successful build</h3>
+    
+<ul>
+<li>
+Follow Instructions from here <a href="https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+SSH+Plugin">https://wiki.jenkins-ci.org/display/JENKINS/Publish+Over+SSH+Plugin</a>
+</li>
+</ul>
+
+<h2 id="toc_1.2">Installing Ant</h2>
+
+<pre>
+
+    wget http://ftp.heanet.ie/mirrors/www.apache.org/dist/ant/binaries/apache-ant-1.8.4-bin.tar.gz
+    tar -zxf apache-ant-1.8.4-bin.tar.gz
+    sudo mv apache-ant-1.8.4 /usr/local
+    sudo ln -s /usr/local/apache-ant-1.8.4/bin/ant /usr/bin/ant
+
+</pre>
+
+<h2 id="toc_1.3">PHP Tools for Jenkins Jobs</h2>
+
+<p>
+Note: Need pear installer. If you dont have it <a href="InstallPear.html">install</a> it.
+</p>
+
+<pre>
+
+    sudo pear upgrade PEAR
+    pear version
+    sudo pear config-set auto_discover 1
+    sudo pear install pear.phpqatools.org/phpqatools pear.netpirates.net/phpDox  (this gets thelatest stable versions)
+    sudo pear install pear.phpdoc.org/phpdocumentor
+    pear channel-discover pear.phpdoc.org
+    pear install phpdoc/phpDocumentor-alpha
+    pear install pear.apigen.org/apigen
+    sudo apt-get install php5-xdebug
+    sudo pear install phpunit/ppw
+    sudo apt-get install php5-xsl (needed for phpdocumentor)
+    sudo apt-get install python-software-properties (needed for phpdocumentor)
+    sudo add-apt-repository ppa:gviz-adm/graphviz-dev 
+
+</pre>
+<p>
+Note: If the above 2 commands to install graphiz dont work try
+</p>
+
+<pre>
+
+    sudo apt-get update
+    sudo apt-get install graphviz
+    sudo apt-get update
+    sudo apt-get upgrade graphviz
+    sudo apt-get remove graphviz
+    sudo apt-get autoremove
+    sudo apt-get install graphviz
+
+</pre>
+
+<h2 id="toc_1.4">Sources</h2>
+
+<ul>
+<li>
+<a href="http://sebastian-bergmann.de/archives/908-PHP-Project-Wizard.html">http://sebastian-bergmann.de/archives/908-PHP-Project-Wizard.html</a>
+</li>
+<li>
+<a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu">https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Ubuntu</a>
+</li>
+<li>
+<a href="http://jenkins-php.org/">http://jenkins-php.org/</a>
+</li>
+<li>
+<a href="http://pear.phpdoc.org/">http://pear.phpdoc.org/</a>
+</li>
+<li>
+<a href="http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php">http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php</a>
+</li>
+<li>
+<a href="http://aaronbonner.tumblr.com/post/8380014964/creating-a-php-project-in-jenkins">http://aaronbonner.tumblr.com/post/8380014964/creating-a-php-project-in-jenkins</a>
+</li>
+<li>
+<a href="http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php">http://aaronbonner.tumblr.com/post/4965561040/getting-started-with-jenkins-for-php</a>
+</li>
+<li>
+<a href="https://github.com/sebastianbergmann">https://github.com/sebastianbergmann</a>
+</li>
+<li>
+<a href="http://thephp.cc/dates/2012/zendcon/phpunit-best-practices">http://thephp.cc/dates/2012/zendcon/phpunit-best-practices</a>
+</li>
+<li>
+Checkstyle uses pear php coding standards
+</li>
+<ul>
+<li>
+<a href="http://pear.php.net/manual/en/standards.php">http://pear.php.net/manual/en/standards.php</a>
+</li>
+</ul>
+<li>
+PHPDepend <a href="http://pdepend.org/documentation/software-metrics/index.html">http://pdepend.org/documentation/software-metrics/index.html</a>
+</li>
+<li>
+PHPDocumentor  <a href="http://www.phpdoc.org/">http://www.phpdoc.org/</a>
+</li>
+<li>
+Apigen <a href="http://apigen.org/">http://apigen.org/</a>
+</li>
+</ul>
+
+</body>
+</html>

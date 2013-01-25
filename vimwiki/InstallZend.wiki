@@ -1,0 +1,62 @@
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+
+= Installing Zend Framework 2 =
+
+*To configure zend framework please refer and follow to http://framework.zend.com/manual/2.0/en/user-guide/overview.html*
+    
+    
+    *Note:* vhosts are under /var/www/ in ubuntu
+    * when adding new sites to apache add them to sites-available 
+    * once finished enter below to generate the enables site symlink in apache
+{{{
+sudo a2ensite {sitename} 
+}}}
+    
+    * to enable mod_rewrite 
+        - make sure apache is installed
+        - enable mod_rewrite
+{{{         
+sudo a2enmod rewrite
+sudo vi /etc/apache2/sites-available/default
+}}}
+    * Find the following
+{{{
+Options Indexes FollowSymLinks MultiViews
+AllowOverride None
+Order allow,deny
+allow from all
+}}}
+
+and change it to
+{{{
+Options Indexes FollowSymLinks MultiViews
+AllowOverride all
+Order allow,deny
+allow from all
+}}}
+
+    * open /etc/phpmyadmin/apache.conf
+    * add the following snippet under <Directory /usr/share/phpmyadmin>
+{{{          
+Options Indexes MultiViews FollowSymLinks   
+AllowOverride None
+Order deny,allow
+Allow from all
+}}}
+    * restart Apache
+{{{
+sudo /etc/init.d/apache2 restart
+}}} 
+You can also start apache by
+{{{ 
+sudo service apache2 restart
+}}}
+
+_Source_: http://www.lavluda.com/2007/07/15/how-to-enable-mod_rewrite-in-apache22-debian/
+    
+* to enable support of .htaccess
+    - www.tildemark.com/enable-htaccess-on-apache
+
+At this point you should have a successful LAMP and Zend Framework Installation.

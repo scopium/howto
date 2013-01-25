@@ -1,0 +1,123 @@
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css" />
+<title>lampInstall</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<p>
+_Last Edited: 
+%Author: Shahin Mohammadkhani <skhani@creativechannel.com> % 
+%Date: 01/24/2013 05:52:55 PM %_
+</p>
+
+<h1 id="toc_1">Installing LAMP On Ubuntu 12.04</h1>
+<pre>
+sudo apt-get install tasksel
+sudo tasksel
+</pre>
+ 
+<ul>
+<li>
+select LAMP server
+</li>
+<li>
+mysql root password: password
+</li>
+<ul>
+<li>
+Now check if php is working
+<pre>
+sudo vi /var/www/info.php
+</pre>
+</li>
+</ul>
+</ul>
+
+<ul>
+<li>
+add 
+<pre>
+&lt;?php phpinfo(); ?&gt;
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+save and exit
+</li>
+<li>
+restart apache
+<pre>
+sudo /etc/init.d/apache2 restart
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+open your browser and type <a href="http://localhost/info">http://localhost/info</a>
+</li>
+<li>
+you should see the php info. if not SOL. google it =)
+</li>
+<ul>
+<li>
+To fully manage your LAMP server db, install phpmyadmin
+<pre>
+sudo apt-get install phpmyadmin
+</pre>
+</li>
+<ul>
+<li>
+set the password to password
+</li>
+<li>
+to login open browser and type <a href="http://localhost/phpmyadmin">http://localhost/phpmyadmin</a>
+</li>
+<li>
+(if) you cant see phpmyadmin then you have to set up phpmyadmin under Apache manually.
+<pre>
+sudo vim /etc/apache2/apache2.conf
+</pre>
+</li>
+</ul>
+</ul>
+</ul>
+
+<ul>
+<li>
+Add the following line inside the file , preferably on the bottom
+<pre>
+Include /etc/phpmyadmin/apache.conf 
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+save and exit
+</li>
+<li>
+restart Apache
+<pre>
+sudo /etc/init.d/apache2 restart
+</pre>
+</li>
+</ul>
+
+<ul>
+<li>
+visit  <a href="http://localhost/phpmyadmin">http://localhost/phpmyadmin</a>
+</li>
+<li>
+username: root
+</li>
+<li>
+password: password
+</li>
+</ul>
+
+</body>
+</html>
